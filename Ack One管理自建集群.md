@@ -10,4 +10,8 @@
 
 ```bash
 kubectl apply -f ack-one-agent.yaml
+
+kubectl -n kube-system get pods
 ```
+
+待ack-cluster-agent pod创建完成后，刷新阿里云后台的注册集群列表页，确认他状态变为‘运行中’。
