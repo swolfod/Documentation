@@ -74,7 +74,7 @@ curl -s http://100.100.100.200/latest/meta-data/ram/security-credentials/
 #### Step 3: 在Ack One后台安装csi-plugin和csi-provisioner
 
 
-进去Ack One后台，在左侧菜单栏点击‘运维管理’->‘组件管理’，在‘存储’下点击安装csi-provisioner和csi-plugin。
+[进去Ack One后台](https://github.com/swolfod/Documentation/blob/main/Ack%20One%E7%AE%A1%E7%90%86%E8%87%AA%E5%BB%BA%E9%9B%86%E7%BE%A4.md)，在左侧菜单栏点击‘运维管理’->‘组件管理’，在‘存储’下点击安装csi-provisioner和csi-plugin。
 
 
 csi-provisioner启动后，配置集群环境变量使用RAM角色
