@@ -32,3 +32,50 @@ kubectl apply -f storageclass.yaml
 kubectl apply -f cluster-operator.yml
 ```
 
+配置rabbitmq cluster.yaml并apply。
+
+```
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-cluster
+  namespace: smyze # Or your desired namespace
+spec:
+  replicas: 3 # Number of RabbitMQ nodes in the cluster
+  image: bucket-registry.cn-shanghai.cr.aliyuncs.com/package/rabbitmq/rabbitmq:4.1.1-management
+  
+  # Resource requests and limits for RabbitMQ pods
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+      
+  # Persistent storage configuration
+  persistence:
+    storageClassName: rabbitmq-storage
+    storage: 20Gi # Requested storage size for each RabbitMQ node
+
+    
+  # Enable management plugin (optional, but highly recommended for dashboard)
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_management
+      - rabbitmq_peer_discovery_k8s # Essential for Kubernetes clustering
+    additionalConfig: |
+      default_user = {username}
+      default_pass = {password}
+
+  override:
+    service:
+      spec:
+        ports:
+          - name: http
+            port: 15672
+            targetPort: 15672
+          - name: amqp
+            port: 5672
+            targetPort: 5672
+```
