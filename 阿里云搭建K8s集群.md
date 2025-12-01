@@ -339,8 +339,7 @@ tar zxvf sampleapp.tar.gz
 kubectl apply -f sampleapp
 ```
 
-测试配置包：
-暂时无法在飞书文档外展示此内容
+[测试配置包](lib/sampleapp.tar.gz)
 
 确认服务pod启动后，在浏览器中访问新添加的域名，应该能看到nginx欢迎页面，证明部署成功
 ![nginx欢迎页面](images/k8s-11.png?raw=true)
