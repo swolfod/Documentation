@@ -1,4 +1,5 @@
 参考文档：
+
 [https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline](https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline)
 [https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline](https://imroc.cc/kubernetes/deploy/kubespray/offline)
 
