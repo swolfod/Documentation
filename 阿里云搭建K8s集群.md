@@ -990,5 +990,5 @@ kubectl apply -f sampleapp
 确认服务pod启动后，在浏览器中访问新添加的域名，应该能看到nginx欢迎页面，证明部署成功
 ![nginx欢迎页面](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-11.png?raw=true)
 
-### 添加阿里云SLS日志
+## 添加阿里云SLS日志
 [如何在自建Kubernetes集群中安装Logtail组件_日志服务(SLS)-阿里云帮助中心](https://help.aliyun.com/zh/sls/user-guide/install-the-logtail-component-self-built-kubernetes-cluster)
