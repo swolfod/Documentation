@@ -33,18 +33,18 @@ ssh root@master-1
 ## 创建一个私网CLB负载均衡器用于k8s-apiserver
 ![创建一个私网CLB负载均衡器用于k8s-apiserver](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-01.PNG?raw=true)
 为集群master主机添加一组虚拟服务器
-[图片]
+![为集群master主机添加一组虚拟服务器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-02.JPEG?raw=true)
 
 添加一项监听，关联刚添加的虚拟服务器组
-[图片]
+![添加一项监听，关联刚添加的虚拟服务器组](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-03.PNG?raw=true)
 在「云解析PrivateZone」里，添加一个内网域名，关联至解析，并关联至刚添加的CLB
-[图片]
+![在「云解析PrivateZone」里，添加一个内网域名，关联至解析，并关联至刚添加的CLB](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-04.png?raw=true)
 
-### 创建一个公网NAT网关供node访问外网
+## 创建一个公网NAT网关供node访问外网
 集群主机没有公网ip，所以需要在VPC上创建NAT网关来访问外网内容。
-[图片]
+![集群主机没有公网ip，所以需要在VPC上创建NAT网关来访问外网内容。](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-05.png?raw=true)
 
-### 配置kubespray
+## 配置kubespray
 在操作机上git clone kubespray:
 ```
 git clone https://github.com/kubernetes-sigs/kubespray.git
@@ -969,15 +969,15 @@ ingress-nginx   ingress-nginx-controller             LoadBalancer   10.233.6.160
 ```
 
 在阿里云上创建一个公网负载均衡器：
-[图片]
+![在阿里云上创建一个公网负载均衡器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-06.png?raw=true)
 创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口
-[图片]
-[图片]
+![创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-07.png?raw=true)
+![创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-08.png?raw=true)
 创建80和443端口的监听，并匹配到相应的虚拟服务器组
-[图片]
+![创建80和443端口的监听，并匹配到相应的虚拟服务器组](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-09.png?raw=true)
 
 测试负载均衡，添加一条DNS域名解析到公网负载均衡器：
-[图片]
+![测试负载均衡，添加一条DNS域名解析到公网负载均衡器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-10.png?raw=true)
 
 在集群中启动一个nginx服务，注意将ingress.yaml里的host配置项改为新添加的域名
 ```
@@ -988,7 +988,7 @@ kubectl apply -f sampleapp
 暂时无法在飞书文档外展示此内容
 
 确认服务pod启动后，在浏览器中访问新添加的域名，应该能看到nginx欢迎页面，证明部署成功
-[图片]
+![nginx欢迎页面](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-11.png?raw=true)
 
 ### 添加阿里云SLS日志
 [如何在自建Kubernetes集群中安装Logtail组件_日志服务(SLS)-阿里云帮助中心](https://help.aliyun.com/zh/sls/user-guide/install-the-logtail-component-self-built-kubernetes-cluster)
