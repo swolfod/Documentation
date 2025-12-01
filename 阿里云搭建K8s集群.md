@@ -1,4 +1,5 @@
 ## 创建云主机
+
 在阿里云上新建1台操作云主机和3台以上集群云主机，注意应尽量让集群主机分属不少于三个的可用区。（以下按6台集群主机，3台master3台worker表述）。
 操作用主机配置一个公网ip，集群主机不配置公网ip。
 所有主机，以及以下所添加的其他阿里云资源，都需要属于同一个VPC网络。
@@ -31,24 +32,34 @@ ssh root@master-1
 ```
 
 ## 创建一个私网CLB负载均衡器用于k8s-apiserver
+
 ![创建一个私网CLB负载均衡器用于k8s-apiserver](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-01.PNG?raw=true)
+
 为集群master主机添加一组虚拟服务器
+
 ![为集群master主机添加一组虚拟服务器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-02.JPEG?raw=true)
 
 添加一项监听，关联刚添加的虚拟服务器组
+
 ![添加一项监听，关联刚添加的虚拟服务器组](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-03.PNG?raw=true)
+
 在「云解析PrivateZone」里，添加一个内网域名，关联至解析，并关联至刚添加的CLB
+
 ![在「云解析PrivateZone」里，添加一个内网域名，关联至解析，并关联至刚添加的CLB](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-04.png?raw=true)
 
 ## 创建一个公网NAT网关供node访问外网
+
 集群主机没有公网ip，所以需要在VPC上创建NAT网关来访问外网内容。
+
 ![集群主机没有公网ip，所以需要在VPC上创建NAT网关来访问外网内容。](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-05.png?raw=true)
 
 ## 配置kubespray
+
 在操作机上git clone kubespray:
 ```
 git clone https://github.com/kubernetes-sigs/kubespray.git
 ```
+
 然后切换到要用的版本tag。这里v2.26.0，对应k8s版本1.30.4:
 ```
 cd kubespray
@@ -60,6 +71,7 @@ git checkout v2.26.0
 cp -rf inventory/sample inventory/smyze
 vim inventory/smyze/inventory.ini
 ```
+
 配置集群node信息
 ```
 # ## Configure 'ip' variable to bind kubernetes services on a
@@ -117,7 +129,7 @@ kube_node
 calico_rr
 ```
 
-编辑inventory/smyze/group_vars/k8s_cluster下的k8s-cluster.yml，addons.yml，编辑以下内容（参考文档）
+编辑inventory/smyze/group_vars/k8s_cluster下的k8s-cluster.yml，addons.yml，编辑以下内容（[参考文档](https://github.com/kubernetes-sigs/kubespray/blob/master/docs/ingress/kube-vip.md)）
 ```
 #k8s-cluster.yml
 kube_proxy_strict_arp: true
@@ -135,7 +147,7 @@ kube_vip_interface: eth0      #ip link show确认network interface
 kube_vip_services_enabled: false
 ```
 
-国内无法直接下载k8s需要用到的镜像和文件，所以要将这些镜像下载下来放到阿里云的镜像仓库和OSS上。具体做法看这里：迁移K8S镜像文件到墙内
+国内无法直接下载k8s需要用到的镜像和文件，所以要将这些镜像下载下来放到阿里云的镜像仓库和OSS上。具体做法看这里：[迁移K8S镜像文件到墙内](https://github.com/swolfod/Documentation/blob/main/%E8%BF%81%E7%A7%BBK8S%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E5%88%B0%E5%A2%99%E5%86%85.md)
 
 编辑inventory/smyze/group_vars/all/offline.yml（注意xxx_download_url要用images.list.template里的内容加上{{ files_repo }}拼接而成
 
@@ -969,14 +981,21 @@ ingress-nginx   ingress-nginx-controller             LoadBalancer   10.233.6.160
 ```
 
 在阿里云上创建一个公网负载均衡器：
+
 ![在阿里云上创建一个公网负载均衡器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-06.png?raw=true)
+
 创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口
+
 ![创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-07.png?raw=true)
+
 ![创建两组虚拟服务器组，分别匹配到集群中所有worker主机的ingress-nginx负载均衡http和https端口](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-08.png?raw=true)
+
 创建80和443端口的监听，并匹配到相应的虚拟服务器组
+
 ![创建80和443端口的监听，并匹配到相应的虚拟服务器组](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-09.png?raw=true)
 
 测试负载均衡，添加一条DNS域名解析到公网负载均衡器：
+
 ![测试负载均衡，添加一条DNS域名解析到公网负载均衡器](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-10.png?raw=true)
 
 在集群中启动一个nginx服务，注意将ingress.yaml里的host配置项改为新添加的域名
@@ -984,6 +1003,7 @@ ingress-nginx   ingress-nginx-controller             LoadBalancer   10.233.6.160
 tar zxvf sampleapp.tar.gz
 kubectl apply -f sampleapp
 ```
+
 测试配置包：
 暂时无法在飞书文档外展示此内容
 
