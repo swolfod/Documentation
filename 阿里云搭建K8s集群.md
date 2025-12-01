@@ -1,4 +1,4 @@
-### 创建云主机
+## 创建云主机
 在阿里云上新建1台操作云主机和3台以上集群云主机，注意应尽量让集群主机分属不少于三个的可用区。（以下按6台集群主机，3台master3台worker表述）。
 操作用主机配置一个公网ip，集群主机不配置公网ip。
 所有主机，以及以下所添加的其他阿里云资源，都需要属于同一个VPC网络。
@@ -30,8 +30,8 @@ ff02::2 ip6-allrouters
 ssh root@master-1
 ```
 
-### 创建一个私网CLB负载均衡器用于k8s-apiserver
-[图片]
+## 创建一个私网CLB负载均衡器用于k8s-apiserver
+![创建一个私网CLB负载均衡器用于k8s-apiserver](https://github.com/swolfod/Documentation/blob/65429c3c8fe732179ac206f5021bad8b35878337/images/k8s-01.PNG?raw=true)
 为集群master主机添加一组虚拟服务器
 [图片]
 
