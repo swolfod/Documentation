@@ -1,6 +1,7 @@
 参考文档：
 
 [https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline](https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline)
+
 [https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/offline](https://imroc.cc/kubernetes/deploy/kubespray/offline)
 
 在阿里云海外区（例如香港）创建云主机，注意主机系统要和部署环境的主机一致
